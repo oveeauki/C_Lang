@@ -20,6 +20,7 @@ typedef struct{
 } player;
 
 char *opt[] = {"rock","paper","scissors"};
+char rnd[15];
 
 void* p_alloc(player* pl[]){
   short a = 0;
@@ -33,7 +34,6 @@ int cmp(char* a,char* b){
 }
 
 char* logic(char* p,char* ai,player* pl[]){
-  system("clear");
   if(cmp(p,ai)){
     pl[0]->ties++;
     return("Tie!");
@@ -55,18 +55,31 @@ char* logic(char* p,char* ai,player* pl[]){
   return("Input Error");
 }
 
+void scores(player* pl[]){
+    system("clear");
+    printf("Returned [%s]\
+          \nScores(w/l):\nAi:(%d/%d)\
+          \nPlayer:(%d/%d)\nTies(%d)\n",rnd,pl[0]->wins,pl[0]->loses,pl[1]->wins,pl[1]->loses,pl[0]->ties);
+}
+
 short main(void){
   player* pl[2];
   srand(UINT32_MAX&~!(time(NULL)));
   p_alloc(pl);
   for(;;){
+    system("clear");
     short abc = rand() % 3;
+    fprintf(stdout,"[RPS_2025]\nEnter\n\u279c ");
     strcpy(pl[0]->input,opt[abc]);
     scanf("%s",pl[1]->input);
+    if(cmp("exit",pl[1]->input)) break;
     char* ret = logic(pl[0]->input,pl[1]->input,pl);
-    printf("Returned [%s]\
-          \nScores(w/l):\nAi:(%d/%d)\
-          \nPlayer:(%d/%d)\nTies(%d)\n",ret,pl[0]->wins,pl[0]->loses,pl[1]->wins,pl[1]->loses,pl[0]->ties);
+    strcpy(rnd,ret);
+    scores(pl);
+    sleep(2);
   }
+  memset(&rnd,0,sizeof(rnd));
+  scores(pl);
+  puts("Exited...");
   return(0);
 }
