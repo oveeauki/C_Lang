@@ -16,7 +16,7 @@ typedef struct{
   short loses;
   short wins;
   short ties;
-  char input[9];
+  char input[10];
 } player;
 
 char *opt[] = {"rock","paper","scissors"};
@@ -25,7 +25,7 @@ char rnd[15];
 void* p_alloc(player* pl[]){
   short a = 0;
   do{
-    pl[a++] = malloc(sizeof(player));
+    pl[a++] = (void*)malloc(sizeof(player));
   }while(pl[a] != NULL);
 }
 
@@ -76,10 +76,10 @@ short main(void){
     char* ret = logic(pl[0]->input,pl[1]->input,pl);
     strcpy(rnd,ret);
     scores(pl);
+    memset(&rnd,0,sizeof(rnd));
     sleep(2);
   }
-  memset(&rnd,0,sizeof(rnd));
   scores(pl);
-  puts("Exited...");
+  puts("\nExited...");
   return(0);
 }
