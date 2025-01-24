@@ -7,7 +7,7 @@
 #define _GNU_SOURCE
 #include "stdlib.h"
 #include "stdint.h"
-#include "stdbool.h" // True and False defines are the opposite way in this header for somereason?
+#include "stdbool.h"
 #include "stdio.h"
 #include "string.h"
 #include "unistd.h"
