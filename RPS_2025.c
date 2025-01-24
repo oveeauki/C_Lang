@@ -7,11 +7,18 @@
 #define _GNU_SOURCE
 #include "stdlib.h"
 #include "stdint.h"
-#include "stdbool.h"
+#include "stdbool.h" // True and False defines are the opposite way in this header for somereason?
 #include "stdio.h"
 #include "string.h"
 #include "unistd.h"
 #include "time.h"
+
+// todo: avoid using system() in screenclearing
+#ifdef _WIN32   
+#define clear() system("cls");
+#else 
+#define clear() system("clear");
+#endif 
 
 typedef struct{
   short loses;
@@ -25,15 +32,21 @@ char rnd[15];
 
 void* p_alloc(player** pl,bool cond){
   short a = 0;
-  do{
-    pl[a++] = (void*)malloc(sizeof(player));
-  }while(pl[a] != NULL);
-
-  if(cond == 0){
+  if(cond == 1){
+    for(short a=0;a<2;a++) {
+        pl[a] = (player*)malloc(sizeof(player));
+        if(pl[a] == NULL){
+          perror("Memory allocation failed");
+          exit(EXIT_FAILURE);
+        }
+        memset(pl[a],0,sizeof(player));
+      } 
+    }
+  else{
     for(short i=0;i<2;i++){
       free(pl[i]);
-    }
   }
+}
 }
 
 int cmp(char* a,char* b){
@@ -63,18 +76,18 @@ char* logic(char* p,char* ai,player** pl){
 }
 
 void scores(player** pl){
-    system("clear");
+    clear();
     printf("Returned [%s]\
-          \nScores(w/l):\nAi:[%d/%d]\
+          \n\nScores(w/l):\nAi:[%d/%d]\
           \nPlayer:[%d/%d]\nTies[%d]\n",rnd,pl[0]->wins,pl[0]->loses,pl[1]->wins,pl[1]->loses,pl[0]->ties);
 }
 
 short main(void){
   player* pl[2];
-  srand(UINT32_MAX &~! (time(NULL))); // Just some random values for seed
+  srand((unsigned int)time(NULL)); // Just some random values for seed
   p_alloc(pl,true);
   for(;;){
-    system("clear");                    
+    clear(); 
     short abc = rand() % 3;
     fprintf(stdout,"[RPS_2025]\nEnter\n\u279c ");
     strcpy(pl[0]->input,opt[abc]);
