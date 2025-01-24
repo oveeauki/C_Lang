@@ -7,6 +7,7 @@
 #define _GNU_SOURCE
 #include "stdlib.h"
 #include "stdint.h"
+#include "stdbool.h"
 #include "stdio.h"
 #include "string.h"
 #include "unistd.h"
@@ -22,8 +23,13 @@ typedef struct{
 char *opt[] = {"rock","paper","scissors"};
 char rnd[15];
 
-void* p_alloc(player* pl[]){
+void* p_alloc(player* pl[],bool cond){
   short a = 0;
+  if(cond == true){
+    for(short i=0;i<2;i++){
+      free(pl[i]);
+    }
+  }
   do{
     pl[a++] = (void*)malloc(sizeof(player));
   }while(pl[a] != NULL);
@@ -64,10 +70,10 @@ void scores(player* pl[]){
 
 short main(void){
   player* pl[2];
-  srand(UINT32_MAX&~!(time(NULL)));
-  p_alloc(pl);
+  srand(UINT32_MAX &~! (time(NULL))); // Just some random values for seed
+  p_alloc(pl,true);
   for(;;){
-    system("clear");
+    system("clear");                    
     short abc = rand() % 3;
     fprintf(stdout,"[RPS_2025]\nEnter\n\u279c ");
     strcpy(pl[0]->input,opt[abc]);
@@ -80,6 +86,7 @@ short main(void){
     sleep(2);
   }
   scores(pl);
+  p_alloc(pl,false);
   puts("\nExited...");
   return(0);
 }
