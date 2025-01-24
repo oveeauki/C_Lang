@@ -25,14 +25,15 @@ char rnd[15];
 
 void* p_alloc(player** pl,bool cond){
   short a = 0;
+  do{
+    pl[a++] = (void*)malloc(sizeof(player));
+  }while(pl[a] != NULL);
+
   if(cond == 0){
     for(short i=0;i<2;i++){
       free(pl[i]);
     }
   }
-  do{
-    pl[a++] = (void*)malloc(sizeof(player));
-  }while(pl[a] != NULL);
 }
 
 int cmp(char* a,char* b){
@@ -64,8 +65,8 @@ char* logic(char* p,char* ai,player** pl){
 void scores(player** pl){
     system("clear");
     printf("Returned [%s]\
-          \nScores(w/l):\nAi:(%d/%d)\
-          \nPlayer:(%d/%d)\nTies(%d)\n",rnd,pl[0]->wins,pl[0]->loses,pl[1]->wins,pl[1]->loses,pl[0]->ties);
+          \nScores(w/l):\nAi:[%d/%d]\
+          \nPlayer:[%d/%d]\nTies[%d]\n",rnd,pl[0]->wins,pl[0]->loses,pl[1]->wins,pl[1]->loses,pl[0]->ties);
 }
 
 short main(void){
