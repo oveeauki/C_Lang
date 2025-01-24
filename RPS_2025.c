@@ -7,7 +7,7 @@
 #define _GNU_SOURCE
 #include "stdlib.h"
 #include "stdint.h"
-#include "stdbool.h"
+#include "stdbool.h" // True and False defines are the opposite way in this header for somereason?
 #include "stdio.h"
 #include "string.h"
 #include "unistd.h"
@@ -23,9 +23,9 @@ typedef struct{
 char *opt[] = {"rock","paper","scissors"};
 char rnd[15];
 
-void* p_alloc(player* pl[],bool cond){
+void* p_alloc(player** pl,bool cond){
   short a = 0;
-  if(cond == true){
+  if(cond == 0){
     for(short i=0;i<2;i++){
       free(pl[i]);
     }
@@ -39,7 +39,7 @@ int cmp(char* a,char* b){
   return strcmp(a,b) == 0;
 }
 
-char* logic(char* p,char* ai,player* pl[]){
+char* logic(char* p,char* ai,player** pl){
   if(cmp(p,ai)){
     pl[0]->ties++;
     return("Tie!");
@@ -61,7 +61,7 @@ char* logic(char* p,char* ai,player* pl[]){
   return("Input Error");
 }
 
-void scores(player* pl[]){
+void scores(player** pl){
     system("clear");
     printf("Returned [%s]\
           \nScores(w/l):\nAi:(%d/%d)\
