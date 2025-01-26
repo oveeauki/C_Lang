@@ -84,7 +84,7 @@ void scores(player** pl){
 
 short main(void){
   player* pl[2];
-  srand((unsigned int)time(NULL)); // Just some random values for seed
+  srand(UINT32_MAX &~! time(NULL)); // Just some random values for seed
   p_alloc(pl,true);
   for(;;){
     clear(); 
