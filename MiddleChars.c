@@ -13,7 +13,6 @@
 char* midchar(const char* str){
   size_t len = strlen(str);
   char* a = malloc(sizeof(char)*3);
-  printf("%d %d %d\n",len,len%2,len/2);
   switch(len%2){
     case 0:
       short x = (len/2)-1;
