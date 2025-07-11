@@ -32,11 +32,16 @@ typedef struct{
 }obj;
 
 void* cmp(size_t ss,char* uin,const char** drinks,obj* ptr){
+  bool match = false;
   for(short i=0;i<ss;i++){
     if(!strcasecmp(uin,drinks[i])){
+      match = true;
       ptr->cash = prices[i]; 
       ptr->drink = (char*)drinks[i];
-    }   
+    }
+  }
+    if(!match){
+      return((int*)1);
   }
 }
 
@@ -61,8 +66,10 @@ signed main(int argc,char** argv){
   while(true){
     printf("\nInput Soda Name (Coca,Pepsi or Sprite)\nThen your money\n(Drink Cash)\n\u279c ");
     scanf("%s %f",&inp,&jeps->_drink);
-    if(!strcasecmp(inp,"exit")) break;
-    cmp(ASZ(drinks),inp,drinks,jeps);
+    if(cmp(ASZ(drinks),inp,drinks,jeps) == (int*)1){
+      puts("No valid Drinkk Inputtedd...");
+      return(1);
+    }
     if(notenough(jeps) == 1) break;
     clear();
   }
