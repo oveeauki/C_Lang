@@ -1,5 +1,6 @@
 /*
-@details this is Test for AES encryption&decrypt via immintrin methods 
+@details this is Test for AES encryption&decrypt via immintrin methods. 
+          not fully done and needs improving
 
 _int8_t 1 byte (8 bits)
 _int32_t 4 bytes (32bits)
