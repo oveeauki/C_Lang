@@ -16,9 +16,8 @@ void** lparalloc(void*** arr,size_t m){
 
 signed main(int argc,char** argv){ 
   void** jaa;
-  lparalloc(&jaa,19);
-  printf("Enter\n\u279c "); 
-  scanf("%s %d",(char*)&jaa[0],(int*)&jaa[1]);
-  printf("%s %d len(%d)\n",&jaa[0],*(int*)&jaa[1],strlen((char*)&jaa[0]));
+  lparalloc(&jaa,1);  
+  printf("Enter\n\u279c "); scanf("%s %d",(char*)jaa[0],(int*)&jaa[1]);
+  printf("%s %d len(%d)\n",(char*)jaa[0],(int*)jaa[1],((size_t)strlen((char*)jaa[0])));
   return(0);
 }
